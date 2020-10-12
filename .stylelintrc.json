@@ -1,0 +1,91 @@
+{
+    "plugins": [
+        "stylelint-scss",
+        "stylelint-order"
+    ],
+    "extends": "stylelint-config-standard",
+    "rules": {
+        "at-rule-no-unknown": null,
+        "scss/at-rule-no-unknown": true,
+        "indentation": 4,
+        "order/properties-order": [
+            [
+                "content",
+                {
+                    "groupName": "dimensions",
+                    "properties": [
+                        "width",
+                        "min-width",
+                        "max-width",
+                        "height",
+                        "min-height",
+                        "max-height",
+                        "margin",
+                        "margin-top",
+                        "margin-bottom",
+                        "margin-left",
+                        "margin-right",
+                        "padding",
+                        "padding-top",
+                        "padding-bottom",
+                        "padding-left",
+                        "padding-right"
+                    ]
+                },
+                "display",
+                "flex-direction",
+                "flex-wrap",
+                "justify-content",
+                "align-items",
+                "align-content",
+                {
+                    "groupName": "position",
+                    "properties": [
+                        "position",
+                        "top",
+                        "bottom",
+                        "left",
+                        "right",
+                        "z-index"
+                    ]
+                },
+                {
+                    "groupName": "font",
+                    "properties": [
+                        "font-family",
+                        "font-size",
+                        "font-weight"
+                    ]
+                }
+            ],
+            {
+                "unspecified": "bottom"
+            }
+        ],
+        "order/order": [
+            {
+                "type": "at-rule",
+                "name": "import"
+            },
+            "custom-properties",
+            "dollar-variables",
+            "declarations",
+            {
+                "type": "rule",
+                "selector": "^&:\\w"
+            },
+            {
+                "type": "rule",
+                "selector": "^&::(before|after)"
+            },
+            {
+                "type": "at-rule",
+                "name": "media"
+            },
+            {
+                "type": "rule",
+                "selector": "^&_"
+            }
+        ]
+    }
+}
