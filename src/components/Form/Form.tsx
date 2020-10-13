@@ -1,22 +1,21 @@
 import React, { FC, useState } from 'react';
 import {
-    Form, FormikProps, Formik,
+    Form, FormikProps, Formik, Field, FieldProps,
 } from 'formik';
 
 import css from './Form.module.scss';
-import { formFields } from './model';
+import {
+    addressField, formSchema, expandFormFields,
+} from './model';
+import { CustomFormValues } from './types';
 
 import { Button, Input } from '../UI';
 import ExpandButton from './ExpandButton/ExpandButton';
 import ExpandFields from './ExpandFields/ExpandFields';
 
-interface Values {
-    address: string;
-    city: string;
-    street: string;
-    house: string;
-    flat: string;
-}
+const handleFormOnChange = (props: FormikProps<CustomFormValues>) => {
+    console.log('onChange() ===> props: ', props);
+};
 
 const CustomForm: FC = () => {
     const [expanded, setExpanded] = useState(true);
@@ -30,23 +29,27 @@ const CustomForm: FC = () => {
                 house: '',
                 flat: '',
             }}
+            validationSchema={formSchema}
             onSubmit={(values, actions) => {
                 console.log('values: ', values);
                 console.log('actions: ', actions);
-                alert(JSON.stringify(values, null, 2));
+                console.log('submiting next: ', JSON.stringify(values, null, 2));
                 actions.setSubmitting(false);
             }}
         >
-            {(props: FormikProps<Values>) => (
-                <Form className={css['form-wrap']}>
-                    <Input
-                        type="text"
-                        name="address"
-                        label="Address"
-                        placeholder="Your address"
-                    />
+            {(props: FormikProps<CustomFormValues>) => (
+                <Form className={css['form-wrap']} onChange={() => handleFormOnChange(props)}>
+                    <Field name="address">
+                        {(fieldProps: FieldProps) => (
+                            <Input
+                                {...addressField}
+                                placeholder="Your address"
+                                onChange={fieldProps.field.onChange}
+                            />
+                        )}
+                    </Field>
                     {expanded
-                        ? <ExpandFields onExpandClick={setExpanded} fields={formFields} />
+                        ? <ExpandFields onExpandClick={setExpanded} fields={expandFormFields} />
                         : <ExpandButton className={css['expand-button']} onClick={setExpanded}>Fill address parts</ExpandButton>}
                     <Button type="submit" disabled={!props.isValid}>Send</Button>
                 </Form>
