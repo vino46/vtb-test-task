@@ -1,0 +1,14 @@
+@import '../../../utils/css/functions.scss';
+
+.button {
+    display: block;
+    margin: rem(32) auto;
+    padding: rem(24) rem(64);
+    font-size: rem(16);
+    border-radius: rem(48);
+    border: none;
+    outline: none;
+    background-color: var(--black);
+    color: var(--white);
+    cursor: pointer;
+}

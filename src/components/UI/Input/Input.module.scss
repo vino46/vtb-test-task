@@ -1,0 +1,31 @@
+@import '../../../utils/css/functions.scss';
+
+.input-wrap {
+    display: block;
+    width: 100%;
+
+    .text {
+        width: 100%;
+        margin-bottom: rem(8);
+    }
+
+    .input {
+        width: 100%;
+        padding: rem(16);
+        box-sizing: border-box;
+        border-radius: 0;
+        border: 1px solid var(--black);
+        outline: none;
+        color: var(--grey-700);
+
+        &::placeholder {
+            color: var(--grey-300);
+        }
+
+        &:active,
+        &:focus {
+            border-radius: none;
+            outline: 1px solid var(--grey-700);
+        }
+    }
+}

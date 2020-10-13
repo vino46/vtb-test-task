@@ -1,0 +1,11 @@
+@import '../../../utils/css/functions.scss';
+
+p,
+span,
+div {
+    &.typography {
+        font-size: rem(16);
+        font-weight: 400;
+        color: var(--black);
+    }
+}

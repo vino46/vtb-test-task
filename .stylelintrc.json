@@ -11,6 +11,12 @@
         "order/properties-order": [
             [
                 "content",
+                "display",
+                "flex-direction",
+                "flex-wrap",
+                "justify-content",
+                "align-items",
+                "align-content",
                 {
                     "groupName": "dimensions",
                     "properties": [
@@ -32,12 +38,6 @@
                         "padding-right"
                     ]
                 },
-                "display",
-                "flex-direction",
-                "flex-wrap",
-                "justify-content",
-                "align-items",
-                "align-content",
                 {
                     "groupName": "position",
                     "properties": [
