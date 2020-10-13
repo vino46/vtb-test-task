@@ -1,0 +1,44 @@
+@import '../../../utils/css/functions.scss';
+
+.wrap {
+    $offset: 32;
+
+    width: 100%;
+    margin-top: rem($offset);
+    padding: rem($offset);
+    position: relative;
+    left: rem(-1 * $offset);
+    background: var(--grey-100);
+    box-sizing: content-box;
+
+    &::before {
+        content: '';
+        width: rem($offset / 1.5);
+        height: rem($offset / 1.5);
+        position: absolute;
+        bottom: 100%;
+        left: rem($offset);
+        background-color: var(--grey-100);
+        transform-origin: 0% 100%;
+        transform: rotate(45deg);
+        pointer-events: none;
+    }
+
+    .fields {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: flex-start;
+        align-content: flex-start;
+        width: 100%;
+        box-sizing: border-box;
+
+        .input-wrap {
+            width: 100%;
+
+            &.shrink {
+                width: 40%;
+            }
+        }
+    }
+}

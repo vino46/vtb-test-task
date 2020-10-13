@@ -1,8 +1,7 @@
 import React, { FC } from 'react';
 
-import { Props } from './props';
-
 import css from './Button.module.scss';
+import { Props } from './props';
 
 const Button: FC<Props> = ({ children, ...rest }) => (
     // because we already defined type as ButtonHTMLAttributes<HTMLButtonElement>['type'] in Props we can do next

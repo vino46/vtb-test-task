@@ -2,9 +2,8 @@ import React, { FC } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import { Props } from './props';
-
 import css from './Typography.module.scss';
+import { Props } from './props';
 
 const Typography: FC<Props> = ({
     variant, className, children, ...rest

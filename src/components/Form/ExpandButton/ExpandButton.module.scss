@@ -1,0 +1,41 @@
+@import '../../../utils/css/functions.scss';
+
+.expand-button-wrap {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+    appearance: none;
+    background-color: transparent;
+    text-align: left;
+    cursor: pointer;
+    color: var(--black);
+
+    &.full-width {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .icon {
+        $border: 2px solid var(--grey-300);
+
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        margin-left: rem(16);
+        border-left: $border;
+        border-bottom: $border;
+        transform: rotate(-45deg);
+
+        &.expanded {
+            transform: rotate(-225deg);
+        }
+    }
+
+    &:hover,
+    &:focus {
+        color: var(--grey-700);
+    }
+}

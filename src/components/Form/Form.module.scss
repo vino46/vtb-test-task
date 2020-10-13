@@ -1,0 +1,11 @@
+@import '../../utils/css/functions.scss';
+
+.form-wrap {
+    display: block;
+    width: 40%;
+    margin: 0 auto;
+
+    .expand-button {
+        margin: rem(16) 0;
+    }
+}

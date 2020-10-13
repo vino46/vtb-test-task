@@ -6,6 +6,6 @@ div {
     &.typography {
         font-size: rem(16);
         font-weight: 400;
-        color: var(--black);
+        color: currentColor;
     }
 }
