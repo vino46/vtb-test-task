@@ -11,11 +11,18 @@ const Input: FC<Props> = ({
     type, name, id, label, className, ...rest
 }) => {
     const htmlId = id || `ui-input__${name}`;
+    const inputProps = {
+        name,
+        type,
+        className: css.input,
+        id: htmlId,
+        ...rest,
+    };
 
     return (
         <label htmlFor={htmlId} className={cx(css['input-wrap'], className)}>
             <Typography variant="p" className={css.text}>{label}</Typography>
-            <input className={css.input} name={name} id={htmlId} type={type} {...rest} />
+            <input {...inputProps} />
         </label>
     );
 };

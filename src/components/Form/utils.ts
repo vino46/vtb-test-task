@@ -1,20 +1,34 @@
 import { CustomFormValues, ExpandedFormValues } from './types';
 
 const getExpandedValues = (address: string): ExpandedFormValues => {
-    const [city, street, house, flat] = address.trim().split(', ');
+    const [city = '', street = '', house = '', flat = ''] = address.split(', ');
+
     return {
         city,
         street,
-        house,
-        flat,
+        house: house.replace(/h\.\s*/g, ''),
+        flat: flat.replace(/app\.\s*/g, ''),
     };
 };
+
+const prefixMap = new Map([
+    [2, 'h.'],
+    [3, 'app.'],
+]);
 
 const getAddressValue = (expandedValues: ExpandedFormValues): string => {
     const {
         city, street, house, flat,
     } = expandedValues;
-    return `${city}, ${street}, ${house}, ${flat}`;
+
+    return [city, street, house, flat].reduce((acc, cv, index) => {
+        const prefix = prefixMap.get(index) || '';
+        if (cv.length > 0) {
+            return `${acc}, ${prefix}${cv}`;
+        }
+
+        return acc;
+    });
 };
 
 export const composeValues = (newValues: CustomFormValues, prevValues: CustomFormValues): CustomFormValues => {
