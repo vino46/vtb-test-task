@@ -29,7 +29,10 @@ export const addressField: FormField = {
     name: 'address',
     type: 'text',
 };
-export const addressSchema = yup.string();
+
+export const addressInitialValue = {
+    address: '',
+};
 
 export const expandFormFields: FormField[] = [
     {
@@ -53,7 +56,20 @@ export const expandFormFields: FormField[] = [
         type: 'number',
     },
 ];
-// export const expandFormSchema = yup.object().shape(getExpandedFieldsYupShape(expandFormFields));
+
+export const expandFormFieldsInitialValues = {
+    city: '',
+    street: '',
+    house: '',
+    flat: '',
+};
+
+export const formInitialValues = {
+    ...addressInitialValue,
+    ...expandFormFieldsInitialValues,
+};
+
+export const addressSchema = yup.string().required();
 
 export const formSchema = yup.object().shape({
     address: addressSchema,

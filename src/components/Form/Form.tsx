@@ -1,60 +1,64 @@
-import React, { FC, useState } from 'react';
-import {
-    Form, FormikProps, Formik, Field, FieldProps,
-} from 'formik';
+import React, { FC, useEffect, useState } from 'react';
+import { useFormik } from 'formik';
 
 import css from './Form.module.scss';
 import {
-    addressField, formSchema, expandFormFields,
+    addressField, formSchema, expandFormFields, formInitialValues,
 } from './model';
-import { CustomFormValues } from './types';
+import { checkChanged, composeValues } from './utils';
 
 import { Button, Input } from '../UI';
 import ExpandButton from './ExpandButton/ExpandButton';
 import ExpandFields from './ExpandFields/ExpandFields';
 
-const handleFormOnChange = (props: FormikProps<CustomFormValues>) => {
-    console.log('onChange() ===> props: ', props);
-};
-
 const CustomForm: FC = () => {
     const [expanded, setExpanded] = useState(true);
+    const [actualFormValues, setActualFormValues] = useState(formInitialValues);
+    const formik = useFormik({
+        initialValues: formInitialValues,
+        validationSchema: formSchema,
+        onSubmit: (values, actions) => {
+            console.log('values: ', values);
+            console.log('actions: ', actions);
+            console.log('submiting next: ', JSON.stringify(values, null, 2));
+            actions.setSubmitting(false);
+        },
+    });
+
+    useEffect(() => {
+        const { values, setValues } = formik;
+        if (checkChanged(actualFormValues, values)) {
+            const newValues = composeValues(actualFormValues, formik.values);
+            setValues(() => newValues, true);
+            setActualFormValues(newValues);
+        }
+    }, [actualFormValues, formik.setValues, formik.values]);
 
     return (
-        <Formik
-            initialValues={{
-                address: '',
-                city: '',
-                street: '',
-                house: '',
-                flat: '',
-            }}
-            validationSchema={formSchema}
-            onSubmit={(values, actions) => {
-                console.log('values: ', values);
-                console.log('actions: ', actions);
-                console.log('submiting next: ', JSON.stringify(values, null, 2));
-                actions.setSubmitting(false);
-            }}
-        >
-            {(props: FormikProps<CustomFormValues>) => (
-                <Form className={css['form-wrap']} onChange={() => handleFormOnChange(props)}>
-                    <Field name="address">
-                        {(fieldProps: FieldProps) => (
-                            <Input
-                                {...addressField}
-                                placeholder="Your address"
-                                onChange={fieldProps.field.onChange}
-                            />
-                        )}
-                    </Field>
-                    {expanded
-                        ? <ExpandFields onExpandClick={setExpanded} fields={expandFormFields} />
-                        : <ExpandButton className={css['expand-button']} onClick={setExpanded}>Fill address parts</ExpandButton>}
-                    <Button type="submit" disabled={!props.isValid}>Send</Button>
-                </Form>
+        <form className={css['form-wrap']} onSubmit={formik.handleSubmit}>
+            <Input
+                {...addressField}
+                placeholder="Your address"
+                value={actualFormValues.address}
+                onChange={({ target: { value } }) => setActualFormValues({ ...actualFormValues, address: value })}
+            />
+            {expanded ? (
+                <ExpandFields
+                    onExpandClick={setExpanded}
+                    fields={expandFormFields}
+                    values={actualFormValues}
+                    onFieldValueChange={(patch) => setActualFormValues({ ...actualFormValues, ...patch })}
+                />
+            ) : (
+                <ExpandButton
+                    className={css['expand-button']}
+                    onClick={setExpanded}
+                >
+                    Fill address parts
+                </ExpandButton>
             )}
-        </Formik>
+            <Button type="submit" disabled={!formik.isValid}>Send</Button>
+        </form>
     );
 };
 

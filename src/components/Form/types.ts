@@ -4,10 +4,13 @@ export type FormField = {
     type: 'text' | 'number';
 };
 
-export interface CustomFormValues {
+export type CustomFormValues = {
     address: string;
     city: string;
     street: string;
     house: string;
     flat: string;
 }
+
+export type ExpandedFormValues = Omit<CustomFormValues, 'address'>;
+export type AddressFormValues = Pick<CustomFormValues, 'address'>;
