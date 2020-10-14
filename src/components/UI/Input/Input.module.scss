@@ -25,8 +25,14 @@
 
         &:active,
         &:focus {
-            border-radius: none;
             outline: 1px solid var(--grey-700);
+        }
+
+        &:disabled,
+        &:read-only {
+            cursor: not-allowed;
+            outline: none !important;
+            border-color: var(--grey-400);
         }
     }
 }

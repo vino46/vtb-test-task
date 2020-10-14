@@ -23,6 +23,7 @@ const CustomForm: FC = () => {
             console.log('submiting next: ', JSON.stringify(values, null, 2));
             actions.setSubmitting(false);
         },
+        validateOnMount: true,
     });
 
     useEffect(() => {
@@ -32,7 +33,7 @@ const CustomForm: FC = () => {
             setValues(() => newValues, true);
             setActualFormValues(newValues);
         }
-    }, [actualFormValues, formik.setValues, formik.values]);
+    }, [actualFormValues, formik]);
 
     return (
         <form className={css['form-wrap']} onSubmit={formik.handleSubmit}>
@@ -40,6 +41,8 @@ const CustomForm: FC = () => {
                 {...addressField}
                 placeholder="Your address"
                 value={actualFormValues.address}
+                disabled={expanded}
+                readOnly={expanded}
                 onChange={({ target: { value } }) => setActualFormValues({ ...actualFormValues, address: value })}
             />
             {expanded ? (

@@ -1,6 +1,6 @@
 import * as yup from 'yup';
 
-import { FormField } from './types';
+import { CustomFormValues, FormField } from './types';
 
 const getValidator = (name: FormField['name']) => {
     switch (name) {
@@ -30,10 +30,6 @@ export const addressField: FormField = {
     type: 'text',
 };
 
-export const addressInitialValue = {
-    address: '',
-};
-
 export const expandFormFields: FormField[] = [
     {
         label: 'City',
@@ -57,16 +53,12 @@ export const expandFormFields: FormField[] = [
     },
 ];
 
-export const expandFormFieldsInitialValues = {
+export const formInitialValues: CustomFormValues = {
+    address: '',
     city: '',
     street: '',
     house: '',
     flat: '',
-};
-
-export const formInitialValues = {
-    ...addressInitialValue,
-    ...expandFormFieldsInitialValues,
 };
 
 export const addressSchema = yup.string().required();
