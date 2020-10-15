@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, memo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 import css from './Button.module.scss';
@@ -7,11 +7,11 @@ import { Props } from './props';
 const Button: FC<Props> = ({
     children, onClick, disabled, ...rest
 }) => {
-    const handleClick = (ev: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    const handleClick = useCallback((ev: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         if (!disabled && typeof onClick === 'function') {
             onClick(ev);
         }
-    };
+    }, [disabled, onClick]);
 
     return (
         // because we already defined type as ButtonHTMLAttributes<HTMLButtonElement>['type'] in Props we can do next
@@ -32,4 +32,4 @@ Button.defaultProps = {
     onClick: undefined,
 };
 
-export default Button;
+export default memo(Button);

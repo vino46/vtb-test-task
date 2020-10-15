@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, memo } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
@@ -26,4 +26,4 @@ Typography.defaultProps = {
     className: '',
 };
 
-export default Typography;
+export default memo(Typography);

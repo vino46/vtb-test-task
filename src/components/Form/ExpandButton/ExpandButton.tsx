@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, memo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
@@ -10,7 +10,7 @@ import { Typography } from '../../UI';
 const ExpandButton: FC<Props> = ({
     expanded, fullWidth, className, onClick, children,
 }) => {
-    const handleClick = () => onClick(!expanded);
+    const handleClick = useCallback(() => onClick(!expanded), [expanded, onClick]);
 
     return (
         <button className={cx(css['expand-button-wrap'], className, fullWidth && css['full-width'])} type="button" onClick={handleClick}>
@@ -33,4 +33,4 @@ ExpandButton.defaultProps = {
     className: '',
 };
 
-export default ExpandButton;
+export default memo<Props & { children: React.ReactNode }>(ExpandButton);

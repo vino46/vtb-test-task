@@ -1,4 +1,5 @@
 import React, {
+    ChangeEvent,
     Dispatch, FC, useEffect, useState,
 } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -17,6 +18,7 @@ import ExpandFields from './ExpandFields/ExpandFields';
 
 import { setAddress, setAddressData } from '../../store/root/actions';
 import { RootAction } from '../../store/root/types';
+import { CustomFormValues } from './types';
 
 const CustomForm: FC = () => {
     const dispatch = useDispatch<Dispatch<RootAction>>();
@@ -44,6 +46,9 @@ const CustomForm: FC = () => {
         }
     }, [actualFormValues, formik]);
 
+    const setFormValuesPatch = (patch: Partial<CustomFormValues>) => setActualFormValues({ ...actualFormValues, ...patch });
+    const onAddressChange = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => setFormValuesPatch({ address: value });
+
     return (
         <form className={css['form-wrap']} onSubmit={formik.handleSubmit}>
             <Input
@@ -52,14 +57,14 @@ const CustomForm: FC = () => {
                 value={actualFormValues.address}
                 disabled={expanded}
                 readOnly={expanded}
-                onChange={({ target: { value } }) => setActualFormValues({ ...actualFormValues, address: value })}
+                onChange={onAddressChange}
             />
             {expanded ? (
                 <ExpandFields
                     onExpandClick={setExpanded}
                     fields={expandFormFields}
                     values={actualFormValues}
-                    onFieldValueChange={(patch) => setActualFormValues({ ...actualFormValues, ...patch })}
+                    onFieldValueChange={setFormValuesPatch}
                 />
             ) : (
                 <ExpandButton
