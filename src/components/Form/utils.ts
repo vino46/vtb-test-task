@@ -1,7 +1,14 @@
 import { CustomFormValues, ExpandedFormValues } from './types';
 
+export const getSplittedAddress = (address: string): string[] => address.split(', ');
+
+const prefixMap = new Map([
+    [2, 'h.'],
+    [3, 'app.'],
+]);
+
 const getExpandedValues = (address: string): ExpandedFormValues => {
-    const [city = '', street = '', house = '', flat = ''] = address.split(', ');
+    const [city = '', street = '', house = '', flat = ''] = getSplittedAddress(address);
 
     return {
         city,
@@ -10,11 +17,6 @@ const getExpandedValues = (address: string): ExpandedFormValues => {
         flat: flat.replace(/app\.\s*/g, ''),
     };
 };
-
-const prefixMap = new Map([
-    [2, 'h.'],
-    [3, 'app.'],
-]);
 
 const getAddressValue = (expandedValues: ExpandedFormValues): string => {
     const {

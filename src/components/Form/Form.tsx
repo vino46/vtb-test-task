@@ -12,7 +12,7 @@ import ExpandButton from './ExpandButton/ExpandButton';
 import ExpandFields from './ExpandFields/ExpandFields';
 
 const CustomForm: FC = () => {
-    const [expanded, setExpanded] = useState(true);
+    const [expanded, setExpanded] = useState(false);
     const [actualFormValues, setActualFormValues] = useState(formInitialValues);
     const formik = useFormik({
         initialValues: formInitialValues,
