@@ -6,12 +6,18 @@ import css from './ExpandFields.module.scss';
 import { Props } from './props';
 
 import { CustomFormValues, FormField } from '../types';
-import { formInitialValues } from '../model';
 
 import ExpandButton from '../ExpandButton/ExpandButton';
 import { Input } from '../../UI';
 
-const validName = (name: string): name is keyof CustomFormValues => name in formInitialValues;
+const formValues: CustomFormValues = {
+    address: '',
+    city: '',
+    flat: '',
+    house: '',
+    street: '',
+};
+const validName = (name: string): name is keyof CustomFormValues => name in formValues;
 
 const ExpandFields: FC<Props> = ({
     onExpandClick, onFieldValueChange, fields, values,

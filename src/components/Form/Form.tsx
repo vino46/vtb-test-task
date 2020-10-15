@@ -1,26 +1,35 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, {
+    Dispatch, FC, useEffect, useState,
+} from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 
 import css from './Form.module.scss';
 import {
-    addressField, formSchema, expandFormFields, formInitialValues,
+    addressField, formSchema, expandFormFields,
 } from './model';
-import { checkChanged, composeValues } from './utils';
+import { checkChanged, composeValues, log } from './utils';
+import { stateFormValuesSelector } from './selectors';
 
 import { Button, Input } from '../UI';
 import ExpandButton from './ExpandButton/ExpandButton';
 import ExpandFields from './ExpandFields/ExpandFields';
 
+import { setAddress, setAddressData } from '../../store/root/actions';
+import { RootAction } from '../../store/root/types';
+
 const CustomForm: FC = () => {
+    const dispatch = useDispatch<Dispatch<RootAction>>();
+    const stateFormValues = useSelector(stateFormValuesSelector);
     const [expanded, setExpanded] = useState(false);
-    const [actualFormValues, setActualFormValues] = useState(formInitialValues);
+    const [actualFormValues, setActualFormValues] = useState(stateFormValues);
     const formik = useFormik({
-        initialValues: formInitialValues,
+        initialValues: stateFormValues,
         validationSchema: formSchema,
-        onSubmit: (values, actions) => {
-            console.log('values: ', values);
-            console.log('actions: ', actions);
-            console.log('submiting next: ', JSON.stringify(values, null, 2));
+        onSubmit: ({ address, ...addressData }, actions) => {
+            dispatch(setAddress(address));
+            dispatch(setAddressData(addressData));
+            log(address, addressData);
             actions.setSubmitting(false);
         },
         validateOnMount: true,

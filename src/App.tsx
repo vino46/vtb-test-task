@@ -1,14 +1,19 @@
 import React from 'react';
-
-import Layout from './components/Layout';
+import { Provider } from 'react-redux';
 
 import css from './App.module.scss';
 
+import Layout from './components/Layout';
+
+import { store } from './store';
+
 function App(): JSX.Element {
     return (
-        <div className={css.app}>
-            <Layout />
-        </div>
+        <Provider store={store}>
+            <div className={css.app}>
+                <Layout />
+            </div>
+        </Provider>
     );
 }
 

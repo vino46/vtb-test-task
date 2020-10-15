@@ -1,6 +1,6 @@
 import * as yup from 'yup';
 
-import { CustomFormValues, FormField } from './types';
+import { FormField } from './types';
 import { getSplittedAddress } from './utils';
 
 const getValidator = (name: FormField['name']) => {
@@ -53,14 +53,6 @@ export const expandFormFields: FormField[] = [
         type: 'number',
     },
 ];
-
-export const formInitialValues: CustomFormValues = {
-    address: '',
-    city: '',
-    street: '',
-    house: '',
-    flat: '',
-};
 
 const addressSchema = yup.string().required().test('address', 'Address is not valid', (value) => {
     if (typeof value === 'string' && value.length > 0) {

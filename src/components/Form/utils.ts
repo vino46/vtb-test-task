@@ -51,3 +51,11 @@ export const composeValues = (newValues: CustomFormValues, prevValues: CustomFor
 
 export const checkChanged = <T extends Record<string, string>>(newObj: T, prevObj: T): boolean =>
     Object.entries(newObj).some(([key, value]) => key in prevObj && prevObj[key] !== value);
+
+export const log = (address: CustomFormValues['address'], parsed: Omit<CustomFormValues, 'address'>): void => {
+    console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
+    console.log('Address values');
+    console.log('address: ', address);
+    console.log('parsed address', parsed);
+    console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
+};
